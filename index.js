@@ -18,7 +18,9 @@ async function getToken() {
   const result = await cca.acquireTokenByClientCredential({
     scopes: ['https://mmmalufconsultoria.sharepoint.com/.default']
   });
-
+  console.log('Token audience:', result.tokenType);
+  console.log('Scopes:', result.scopes);
+  console.log('Token (primeiros 100 chars):', result.accessToken?.substring(0, 100));
   return result.accessToken;
 }
 
