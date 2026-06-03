@@ -28,7 +28,7 @@ app.get('/video', async (req, res) => {
   try {
     const token = await getToken();
 
-    const fileUrl = `https://mmmalufconsultoria.sharepoint.com${req.query.path}/$value`;
+    const fileUrl = `https://mmmalufconsultoria.sharepoint.com/sites/ServidorGeraoBancria/_api/web/getFileByServerRelativeUrl('${encodeURIComponent(req.query.path)}')/$value`;
 
     const headers = {
       Authorization: `Bearer ${token}`
