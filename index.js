@@ -1,6 +1,6 @@
 import express from 'express';
 import fetch from 'node-fetch';
-import msal from '@azure/msal-node';
+import * as msal from '@azure/msal-node';
 
 const app = express();
 
@@ -37,6 +37,12 @@ app.get('/video', async (req, res) => {
     }
 
     const spResp = await fetch(fileUrl, { headers });
+
+    if (!spResp.ok) {
+      const errText = await spResp.text();
+      console.error('SharePoint error:', spResp.status, errText);
+      return res.status(spResp.status).send(errText);
+    }
 
     res.set('Content-Type', 'video/mp4');
     res.set('Accept-Ranges', 'bytes');
