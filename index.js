@@ -43,6 +43,8 @@ app.get('/video', async (req, res) => {
     if (!spResp.ok) {
       const errText = await spResp.text();
       console.error('SharePoint error:', spResp.status, errText);
+      console.error('URL chamada:', fileUrl);
+      console.error('Token usado (início):', token?.substring(0, 100));
       return res.status(spResp.status).send(errText);
     }
 
