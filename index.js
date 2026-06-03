@@ -21,16 +21,18 @@ async function getToken() {
   return result.accessToken;
 }
 
+const DRIVE_ID = 'b!vQlJtps_j0yPYJqkz3nghnAaRIU42LtLudzr-7_dcjpwXzayodOfT5TQMhcGvJa4';
+
 app.get('/video', async (req, res) => {
   try {
     const token = await getToken();
     
-    // Primeiro pega o drive item pelo caminho
-    const siteId = 'mmmalufconsultoria.sharepoint.com,/sites/ServidorGeraoBancria';
-    const filePath = req.query.path.replace('/sites/ServidorGeraoBancria', '');
+    // O path chega como /sites/ServidorGeraoBancria/Teste/Servidor Geração Bancária/...
+    // /Teste é a raiz do drive, então removemos até ele
+    const filePath = req.query.path.replace('/sites/ServidorGeraoBancria/Teste', '');
     const encodedPath = filePath.split('/').map(encodeURIComponent).join('/');
     
-    const graphUrl = `https://graph.microsoft.com/v1.0/sites/mmmalufconsultoria.sharepoint.com:/sites/ServidorGeraoBancria:/drive/root:${encodedPath}:/content`;
+    const graphUrl = `https://graph.microsoft.com/v1.0/drives/${DRIVE_ID}/root:${encodedPath}:/content`;
     console.log('Graph URL:', graphUrl);
     const headers = { Authorization: `Bearer ${token}` };
     if (req.headers.range) headers.Range = req.headers.range;
