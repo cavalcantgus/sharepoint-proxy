@@ -30,7 +30,7 @@ app.get('/video', async (req, res) => {
     const filePath = req.query.path.replace('/sites/ServidorGeraoBancria', '');
     const encodedPath = filePath.split('/').map(encodeURIComponent).join('/');
     
-    const graphUrl = `https://graph.microsoft.com/v1.0/sites/mmmalufconsultoria.sharepoint.com:/sites/ServidorGeraoBancria/drive/root:${encodedPath}:/content`;
+    const graphUrl = `https://graph.microsoft.com/v1.0/sites/mmmalufconsultoria.sharepoint.com:/sites/ServidorGeraoBancria:/drive/root:${encodedPath}:/content`;
     console.log('Graph URL:', graphUrl);
     const headers = { Authorization: `Bearer ${token}` };
     if (req.headers.range) headers.Range = req.headers.range;
